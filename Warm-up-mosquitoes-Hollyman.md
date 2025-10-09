@@ -10,20 +10,28 @@ Corinne Hollyman
   - [Hypothesis](#hypothesis)
   - [Prediction](#prediction)
 - [METHODS](#methods)
-  - [Fill in first analysis](#fill-in-first-analysis)
-  - [Fill in second analysis/plot](#fill-in-second-analysisplot)
+  - [First Analysis- Horizontal
+    Barplots](#first-analysis--horizontal-barplots)
+  - [Second Analysis- Generalized Linear
+    Model](#second-analysis--generalized-linear-model)
 - [DISCUSSION](#discussion)
-  - [Interpretation - fill in
-    analysis](#interpretation---fill-in-analysis)
-  - [Interpretation - fill in
-    analysis/plot](#interpretation---fill-in-analysisplot)
-- [CONCLUSION](#conclusion)
+  - [Interpretation of Horizontal
+    Barplots](#interpretation-of-horizontal-barplots)
+  - [Interpretation of Generalized Linear
+    Model](#interpretation-of-generalized-linear-model)
 - [REFERENCES](#references)
 
 # ABSTRACT
 
-Fill in abstract at the end after we have finished the methods, results,
-discussion, conclusions and know what our data “says”.
+This report investigates the species that mosquitoes in the Salt Lake
+City area are taking bloodmeals from, and the prevalence of mosquitoes
+infected with West Nile Virus. Through COI sequencing, the species each
+mosquito took a bloodmeal from was identified, as well as if each sample
+was infected with West Nile Virus. This data was then analyzed to
+examine the correlation between House Finch bloodmeals and viral
+infections. House Finches were found to have a positive correlation with
+West Nile Virus prevalence, indicating that House Finches are acting as
+amplifying hosts of WNV in Salt Lake City, UT.
 
 # BACKGROUND
 
@@ -101,9 +109,16 @@ WNV in the pool of mosquitoes.
 # METHODS
 
 Over 300 mosquitoes were collected at various locations in Salt Lake
-City, UT.
+City, UT. Polymerase Chain Reaction (PCR) was performed to amplify the
+amount of mitochondrial DNA present in the bloodmeals taken by the
+mosquitoes. After verifying the success of the PCR process with gel
+electrophoresis, the mitochondrial DNA was sequenced using MinION
+sequencing. The COI sequence for each bloodmeal was then analyzed using
+BLASTn at NCBI to identify the species each bloodmeal was taken from.
+Each sample was also analyzed to determine if West Nile Virus was
+present.
 
-## Fill in first analysis
+## First Analysis- Horizontal Barplots
 
 Horizontal plots:
 
@@ -203,13 +218,7 @@ par(op)
 host_species_colors <- species_colors
 ```
 
-\##The original code I’m not sure what to do with
-
-``` r
-# put code for analysis here
-```
-
-## Fill in second analysis/plot
+## Second Analysis- Generalized Linear Model
 
 ``` r
 #glm with house-finch alone against positivity rate
@@ -238,17 +247,31 @@ summary(glm2)
     ## 
     ## Number of Fisher Scoring iterations: 2
 
-``` r
-# put code for plotting here
-```
-
 # DISCUSSION
 
-## Interpretation - fill in analysis
+## Interpretation of Horizontal Barplots
 
-## Interpretation - fill in analysis/plot
+The bar plot on the left demonstrates the distribution of species that
+bloodmeals were taken at locations that were negative for West Nile
+Virus. The bar plot on the right looks at the distribution of species at
+locations that were positive for West Nile Virus. In both plots, the top
+three species were House Finches, House Sparrows, and American Robins.
+However, at locations that were positive for West Nile Virus, the number
+of bloodmeals taken from House Finches was much higher, demonstrating a
+positive correlation between bloodmeals from House Finches and
+prevalence of West Nile Virus.
 
-# CONCLUSION
+## Interpretation of Generalized Linear Model
+
+The generalized linear model looks at the relationship between the
+number of bloodmeals taken from House Finches and the number of
+mosquitoes infected with West Nile Virus per location. The estimate of
+this relationship is 0.0275, meaning that there is a slight positive
+correlation between the number of bloodmeals from House Finches and the
+number of infected mosquitoes. While this correlation doesn’t appear
+strong, it is statistically significant, as it has a p-value of
+4.54e-05, meaning that it is extremely unlikely that this correlation is
+due simply to chance. \# CONCLUSION
 
 # REFERENCES
 
