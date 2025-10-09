@@ -74,7 +74,7 @@ If house finches are acting as amplifying hosts for West Nile Virus, then areas 
 
 # METHODS
 
-Over 300 mosquitoes were collected at various locations in Salt Lake City, UT. 
+Over 300 mosquitoes were collected at various locations in Salt Lake City, UT.  
 
 ## Fill in first analysis
 Horizontal plots:
@@ -170,10 +170,7 @@ par(op)
 host_species_colors <- species_colors
 ```
 
-##The original code I'm not sure what to do with
-```{r first-analysis, include=TRUE, eval=TRUE, warning=FALSE, fig.align='left', fig.width=4.75, fig.height=7}
-# put code for analysis here
-```
+
 
 ## Fill in second analysis/plot
 ```{r}
