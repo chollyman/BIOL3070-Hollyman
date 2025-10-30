@@ -1,0 +1,85 @@
+---
+title: "Final Rmarkdown Report"
+author: "Corinne Hollyman"
+date: "`r Sys.Date()`"
+output:
+  github_document:
+    toc: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+# ABSTRACT
+
+FILL OUT
+
+# BACKGROUND
+
+FILL OUT 
+
+
+# STUDY QUESTION and HYPOTHESIS
+
+## Questions  
+
+DRAFT: Is there a correlation between the proportion of days with poor air quality and the percent of adults with current asthma?
+
+## Hypothesis 
+
+FILL OUT
+
+## Prediction
+FILL OUT
+
+# METHODS
+
+FILL OUT
+
+## First Analysis- Scatterplot
+```{r}
+my_data <- read.csv("Data for Final Rmarkdown Project.csv")
+
+regression_model <- lm(my_data$Percent.Adults.with.Current.Asthma ~ my_data$Poor.Air.Quality.Days)
+
+plot(my_data$Poor.Air.Quality.Days, my_data$Percent.Adults.with.Current.Asthma,
+     ylim = c(8,13.5),
+     main = "Title TBD",
+     xlab = "Percentage of days with \"poor\" air quality",
+     ylab = "Percentage of adults with current asthma",
+     pch = 16,
+     col = "blue4")
+
+abline(regression_model, col="red") 
+
+
+```
+
+
+
+## Second Analysis- TBD
+
+This can be ignored, I was just testing this.
+```{r}
+regression_model <- lm(my_data$Percent.Adults.with.Current.Asthma ~ my_data$Poor.Air.Quality.Days)
+
+summary(regression_model)
+```
+
+
+
+# DISCUSSION
+
+## Interpretation of Scatterplot
+FILL OUT 
+
+## Interpretation of Second Analysis
+FILL OUT 
+
+# CONCLUSION
+FILL OUT
+
+# REFERENCES     
+
+FILL OUT
+

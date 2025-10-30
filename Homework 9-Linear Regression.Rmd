@@ -1,0 +1,52 @@
+---
+title: "Homework 9-Linear Regression"
+output: html_document
+date: "2025-10-21"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r loading data}
+
+# load data
+
+life_expectancy <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2023/2023-12-05/life_expectancy.csv')
+
+```
+
+```{r regression}
+
+# Linear regression years before 1883 (Koch's germ theory)
+
+lm_b1883 <- lm(LifeExpectancy ~ Year, data = life_expectancy[life_expectancy$Year < 1883,])
+
+summary(lm_b1883)
+
+
+
+
+# Linear regression years after 1883 (Koch's germ theory)
+
+lm_a1883 <- lm(LifeExpectancy ~ Year, data = life_expectancy[life_expectancy$Year > 1883,])
+
+summary(lm_a1883)
+
+```
+
+```{r scatterplot}
+
+plot(life_expectancy$Year,life_expectancy$LifeExpectancy, pch = 19, col = "grey", xlab = "Year of Birth", ylab = "Life Expectancy")
+
+abline(lm_b1883, lt = 3)
+
+abline(lm_a1883, lt = 1)
+
+```
