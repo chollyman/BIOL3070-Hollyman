@@ -1,7 +1,7 @@
 Final Rmarkdown Report
 ================
 Corinne Hollyman
-2025-10-30
+2025-11-13
 
 - [ABSTRACT](#abstract)
 - [BACKGROUND](#background)
@@ -11,7 +11,8 @@ Corinne Hollyman
   - [Prediction](#prediction)
 - [METHODS](#methods)
   - [First Analysis- Scatterplot](#first-analysis--scatterplot)
-  - [Second Analysis- TBD](#second-analysis--tbd)
+  - [Second Analysis- Pearson Correlation
+    Test](#second-analysis--pearson-correlation-test)
 - [DISCUSSION](#discussion)
   - [Interpretation of Scatterplot](#interpretation-of-scatterplot)
   - [Interpretation of Second
@@ -25,22 +26,37 @@ FILL OUT
 
 # BACKGROUND
 
-FILL OUT
+Asthma is a chronic, or long-term condition that affects the airways of
+the lungs. Asthma causes inflammation of these passages, which in turn
+narrows the airways. This narrowing causes symptoms like shortness of
+breath, chest tightness, and coughing. While many consider asthma to be
+a childhood disease, asthma is also common in adults, affecting nearly
+23 million US adults (Asthma in Adults \| AAFA.org, 2024). Asthma
+triggers are things that can set off or worsen asthma symptoms, and
+include pollen, exercise, viral infections, or cold air (Keet et al.,
+2017). Air pollution, both indoor and outdoor, has also been linked to
+asthma symptoms (What Is Asthma? \| NHLBI, NIH, 2024). While air
+pollution and asthma have been determined to be linked (Keet et al.,
+2017), it is not entirely clear if air pollution necessarily causes
+asthma, or if it simply causes or exacerbates symptoms in individuals
+already affected with asthma.
 
 # STUDY QUESTION and HYPOTHESIS
 
 ## Questions
 
-DRAFT: Is there a correlation between the proportion of days with poor
-air quality and the percent of adults with current asthma?
+Is there a correlation between the proportion of days with poor air
+quality and the percent of adults with current asthma?
 
 ## Hypothesis
 
-FILL OUT
+If poor air quality and asthma prevalence are linked, then states with
+more days with poor air quality will have more adults with asthma.
 
 ## Prediction
 
-FILL OUT
+States with more days with recorded poor air quality will have higher
+prevalence of adults with asthma.
 
 # METHODS
 
@@ -48,52 +64,57 @@ FILL OUT
 
 ## First Analysis- Scatterplot
 
+This visualization plots the proportion of days with poor air quality on
+the x-axis, and the percentage of adults with current asthma on the
+y-axis. Each data point corresponds to a state in the US. The slope of
+the red line is the result of a linear regression model performed on the
+data.
+
 ``` r
-my_data <- read.csv("Data for Final Rmarkdown Project.csv")
+#importing data
+my_data <- read.csv("Updated Final Data.csv")
 
-regression_model <- lm(my_data$Percent.Adults.with.Current.Asthma ~ my_data$Poor.Air.Quality.Days)
 
-plot(my_data$Poor.Air.Quality.Days, my_data$Percent.Adults.with.Current.Asthma,
-     ylim = c(8,13.5),
-     main = "Title TBD",
+#running a linear regression model on the data
+regression_model <- lm(my_data$Percent.Adults.with.Current.Asthma ~ my_data$Percentage.of..poor.air.quality..days)
+
+
+#creating scatterplot 
+plot(my_data$Percentage.of..poor.air.quality..days, my_data$Percent.Adults.with.Current.Asthma,
+     main = "Poor Air Quality Days vs Percent Adults with Current Asthma",
      xlab = "Percentage of days with \"poor\" air quality",
      ylab = "Percentage of adults with current asthma",
      pch = 16,
      col = "blue4")
 
+#adding regression line to the plot
 abline(regression_model, col="red") 
+
+#adding a legend with the slope, p-value, and multiple r-squared values from the regession line
+legend("topright",
+       legend= c("Slope= -4.5919","p-value= 0.0497", "Multiple R-squared= 0.07785"),
+       cex = 0.6,
+       bty = "n")
 ```
 
 ![](Final-Rmarkdown-Report_files/figure-gfm/unnamed-chunk-1-1.png)<!-- -->
 
-## Second Analysis- TBD
+## Second Analysis- Pearson Correlation Test
 
-This can be ignored, I was just testing this.
+This test measures the correlation between the proportion of days with
+poor air quality and the percent of adults with current asthma in each
+state. The analysis calculates a Pearson Correlation value between -1
+and 1. A high score indicates high similarity, while a score near 0
+indicates no correlation (ADD SOURCE).
 
 ``` r
-regression_model <- lm(my_data$Percent.Adults.with.Current.Asthma ~ my_data$Poor.Air.Quality.Days)
+#run correlation test
+rce <- cor(my_data$Percentage.of..poor.air.quality..days, my_data$Percent.Adults.with.Current.Asthma)
 
-summary(regression_model)
+rce #view test result
 ```
 
-    ## 
-    ## Call:
-    ## lm(formula = my_data$Percent.Adults.with.Current.Asthma ~ my_data$Poor.Air.Quality.Days)
-    ## 
-    ## Residuals:
-    ##     Min      1Q  Median      3Q     Max 
-    ## -3.0004 -0.7320 -0.1886  0.8188  2.4752 
-    ## 
-    ## Coefficients:
-    ##                               Estimate Std. Error t value Pr(>|t|)    
-    ## (Intercept)                    11.5595     0.5538  20.873   <2e-16 ***
-    ## my_data$Poor.Air.Quality.Days  -4.5919     2.2811  -2.013   0.0497 *  
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-    ## 
-    ## Residual standard error: 1.301 on 48 degrees of freedom
-    ## Multiple R-squared:  0.07785,    Adjusted R-squared:  0.05864 
-    ## F-statistic: 4.052 on 1 and 48 DF,  p-value: 0.04974
+    ## [1] -0.2790206
 
 # DISCUSSION
 
@@ -111,4 +132,15 @@ FILL OUT
 
 # REFERENCES
 
-FILL OUT
+1.  Asthma in adults \| AAFA.org. (2024, October 7). Asthma & Allergy
+    Foundation of America.
+    <https://aafa.org/asthma/living-with-asthma/asthma-in-adults/>
+
+2.  Keet, C. A., Keller, J. P., & Peng, R. D. (2017). Long-Term Coarse
+    Particulate Matter Exposure Is Associated with Asthma among Children
+    in Medicaid. American Journal of Respiratory and Critical Care
+    Medicine, 197(6), 737–746.
+    <https://doi.org/10.1164/rccm.201706-1267oc>
+
+3.  What is asthma? \| NHLBI, NIH. (2024, April 17). NHLBI, NIH.
+    <https://www.nhlbi.nih.gov/health/asthma>
