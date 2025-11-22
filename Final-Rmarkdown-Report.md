@@ -1,7 +1,7 @@
 Final Rmarkdown Report
 ================
 Corinne Hollyman
-2025-11-13
+2025-11-22
 
 - [ABSTRACT](#abstract)
 - [BACKGROUND](#background)
@@ -15,14 +15,18 @@ Corinne Hollyman
     Test](#second-analysis--pearson-correlation-test)
 - [DISCUSSION](#discussion)
   - [Interpretation of Scatterplot](#interpretation-of-scatterplot)
-  - [Interpretation of Second
-    Analysis](#interpretation-of-second-analysis)
+  - [Interpretation of Pearson Correlation
+    Test](#interpretation-of-pearson-correlation-test)
 - [CONCLUSION](#conclusion)
 - [REFERENCES](#references)
 
 # ABSTRACT
 
-FILL OUT
+This report analyzes data on the percentage of days with poor air
+quality and the percentage of adults with current asthma grouped by US
+state. Statistical analysis revealed a weak, slight negative correlation
+between the variables, with states with more frequent days with poor air
+quality seeming to have lower rates of asthma in adults.
 
 # BACKGROUND
 
@@ -40,6 +44,19 @@ pollution and asthma have been determined to be linked (Keet et al.,
 2017), it is not entirely clear if air pollution necessarily causes
 asthma, or if it simply causes or exacerbates symptoms in individuals
 already affected with asthma.
+
+The US Environmental Protection Agency (EPA) uses the US Air Quality
+Index (AQI) to measure and report outdoor air quality. The AQI includes
+six categories, each based on a range of index values. The higher the
+AQI value, the greater the air pollution, and the worse the air quality.
+The below table illustrates the categories, as well as their effects on
+individuals (AQI Basics \| AirNow.gov, n.d.).
+
+``` r
+knitr::include_graphics("./images/AQI table.png")
+```
+
+![](./images/AQI%20table.png)<!-- -->
 
 # STUDY QUESTION and HYPOTHESIS
 
@@ -60,7 +77,92 @@ prevalence of adults with asthma.
 
 # METHODS
 
-FILL OUT
+The data on asthma prevalence in adults was sourced from the CDC (Most
+Recent Asthma Data, 2024). For simplicity, we analyzed only the main 50
+states, omitting the data on the District of Columbia, Guam, Puerto
+Rico, and the Virgin Islands. The data on air quality by state was
+sourced from the United States Environmental Protection Agency (Download
+Files \| AirData \| US EPA, n.d.). For both, the data was collected in
+2022. The annual summary data was divided by county within each state,
+so to identify the average percentage of days with poor air quality, we
+took the average of all counties recorded in the state. We defined days
+with “poor” air quality as days with an AQI measuring moderate to
+hazardous. As each state had varying numbers of days recorded, we used
+the averages instead of counts.
+
+To confirm the data is normal, we created histograms to visualize the
+distribution of the data.
+
+``` r
+#importing data
+my_data <- read.csv("Updated Final Data.csv")
+
+#create histogram
+hist(my_data$Percentage.of..poor.air.quality..days, probability = TRUE,
+     main = 'Distribution of poor air quality days',
+     xlab = 'Percentage of poor air quality days')
+
+#add mean vertical line
+abline(v = mean(my_data$Percentage.of..poor.air.quality..days), col='red', lwd = 3)
+
+#add curved line 
+lines(density(my_data$Percentage.of..poor.air.quality..days), col='red', lwd = 3)
+```
+
+![](Final-Rmarkdown-Report_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
+
+``` r
+#create second histogram
+hist(my_data$Percent.Adults.with.Current.Asthma, probability = TRUE,
+     main = 'Distribution of percent adults with current asthma',
+     xlab = 'Percentage of adults with current asthma')
+
+#add mean vertical line
+abline(v = mean(my_data$Percent.Adults.with.Current.Asthma), col='blue', lwd = 3)
+
+#add curved distribution line
+lines(density(my_data$Percent.Adults.with.Current.Asthma), col='blue', lwd = 3)
+```
+
+![](Final-Rmarkdown-Report_files/figure-gfm/unnamed-chunk-2-2.png)<!-- -->
+
+Since the histograms weren’t obviously normal using visual analysis, we
+ran a Shapiro-Wilk test to confirm that they were not statistically
+different from normal.
+
+Shapiro-Wilk test on the percentage of poor air quality days:
+
+``` r
+shapiro.test(my_data$Percentage.of..poor.air.quality..days)
+```
+
+    ## 
+    ##  Shapiro-Wilk normality test
+    ## 
+    ## data:  my_data$Percentage.of..poor.air.quality..days
+    ## W = 0.97984, p-value = 0.5452
+
+Since the p-value of 0.5452 is greater than 0.05, there is insufficient
+evidence to state that the data is not normally distributed.
+
+Shapiro-Wilk test for the percentage of adults with current asthma:
+
+``` r
+shapiro.test(my_data$Percent.Adults.with.Current.Asthma)
+```
+
+    ## 
+    ##  Shapiro-Wilk normality test
+    ## 
+    ## data:  my_data$Percent.Adults.with.Current.Asthma
+    ## W = 0.97676, p-value = 0.4249
+
+Since the p-value of 0.4249 is greater than 0.05, there is insufficient
+evidence to state that the data is not normally distributed.
+
+As both variables can be assumed to be normally distributed, we can
+proceed to run additional statistical tests to evaluate the relationship
+between the two variables.
 
 ## First Analysis- Scatterplot
 
@@ -97,7 +199,7 @@ legend("topright",
        bty = "n")
 ```
 
-![](Final-Rmarkdown-Report_files/figure-gfm/unnamed-chunk-1-1.png)<!-- -->
+![](Final-Rmarkdown-Report_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
 
 ## Second Analysis- Pearson Correlation Test
 
@@ -105,7 +207,7 @@ This test measures the correlation between the proportion of days with
 poor air quality and the percent of adults with current asthma in each
 state. The analysis calculates a Pearson Correlation value between -1
 and 1. A high score indicates high similarity, while a score near 0
-indicates no correlation (ADD SOURCE).
+indicates no correlation (“Data Simplification,” 2016).
 
 ``` r
 #run correlation test
@@ -120,27 +222,61 @@ rce #view test result
 
 ## Interpretation of Scatterplot
 
-FILL OUT
+The scatter plot demonstrates a slight negative trend, opposing the
+original prediction of a positive correlation between the two variables.
+The linear regression model run has a p-value of 0.0497, indicating that
+the correlation is statistically significant. While the slope of the
+linear regression line is -4.5919, the data is not visually strongly
+associated with the line, something to be discussed in the following
+section.
 
-## Interpretation of Second Analysis
+## Interpretation of Pearson Correlation Test
 
-FILL OUT
+To determine the strength of the correlation between the percentage of
+days with poor air quality and the percent adults with current asthma, a
+Pearson correlation test was run. The test provided an r-value of
+-0.279, indicating that there is a weak negative correlation between the
+variables. This result implies that while there is a statistically
+significant correlation, the correlation itself is weak, and confirms
+the linear regression result of a negative relationship.
 
 # CONCLUSION
 
-FILL OUT
+Statistical analysis of the relationship between the percentage of days
+with poor air quality and the percent of adults with current asthma by
+US state resulted in a weak, slightly negative correlation. This finding
+opposes the original prediction that there would be a positive
+correlation between the variables. Possible confounding factors and
+limitations of this study include the large sample locations, as air
+quality varies within areas of a state, as well as the wide definition
+of “poor” air quality. Limiting the definition to AQIs of more severity,
+such as excluding moderate and unhealthy for sensitive groups and
+restricting it to just unhealthy to hazardous AQIs may result in a more
+significant correlation, potentially changing the trend as well.
 
 # REFERENCES
 
-1.  Asthma in adults \| AAFA.org. (2024, October 7). Asthma & Allergy
+1.  AQI Basics \| AirNow.gov. (n.d.).
+    <https://www.airnow.gov/aqi/aqi-basics/>
+
+2.  Asthma in adults \| AAFA.org. (2024, October 7). Asthma & Allergy
     Foundation of America.
     <https://aafa.org/asthma/living-with-asthma/asthma-in-adults/>
 
-2.  Keet, C. A., Keller, J. P., & Peng, R. D. (2017). Long-Term Coarse
+3.  Data simplification. (2016). In Elsevier eBooks.
+    <https://doi.org/10.1016/c2015-0-00783-3>
+
+4.  Download files \| AirData \| US EPA. (n.d.).
+    <https://aqs.epa.gov/aqsweb/airdata/download_files.html>
+
+5.  Keet, C. A., Keller, J. P., & Peng, R. D. (2017). Long-Term Coarse
     Particulate Matter Exposure Is Associated with Asthma among Children
     in Medicaid. American Journal of Respiratory and Critical Care
     Medicine, 197(6), 737–746.
     <https://doi.org/10.1164/rccm.201706-1267oc>
 
-3.  What is asthma? \| NHLBI, NIH. (2024, April 17). NHLBI, NIH.
+6.  Most recent asthma data. (2024, November 21). Asthma Data.
+    <https://www.cdc.gov/asthma-data/about/most-recent-asthma-data.html?CDC_AA_refVal=https%3A%2F%2Fwww.cdc.gov%2Fasthma%2Fmost_recent_data.htm>
+
+7.  What is asthma? \| NHLBI, NIH. (2024, April 17). NHLBI, NIH.
     <https://www.nhlbi.nih.gov/health/asthma>
