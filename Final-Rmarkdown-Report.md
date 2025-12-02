@@ -1,7 +1,7 @@
 Final Rmarkdown Report
 ================
 Corinne Hollyman
-2025-11-22
+2025-12-02
 
 - [ABSTRACT](#abstract)
 - [BACKGROUND](#background)
@@ -90,8 +90,20 @@ with “poor” air quality as days with an AQI measuring moderate to
 hazardous. As each state had varying numbers of days recorded, we used
 the averages instead of counts.
 
-To confirm the data is normal, we created histograms to visualize the
-distribution of the data.
+After establishing that the data for both variables was normally
+distributed, a linear regression model was chosen to analyze the trend
+of the data, identifying whether there was a positive or negative
+correlation between the variables. A Pearson correlation test was
+performed following the results from the linear regression model in
+order to identify the strength of the correlation found.
+
+## First Analysis- Scatterplot
+
+#### Confirmation of Normal Distribution
+
+Prior to running statistical analyses, we had to confirm that the data
+is normally distributed. In order to do this, we created histograms to
+visualize the distribution of the data.
 
 ``` r
 #importing data
@@ -128,9 +140,14 @@ lines(density(my_data$Percent.Adults.with.Current.Asthma), col='blue', lwd = 3)
 
 Since the histograms weren’t obviously normal using visual analysis, we
 ran a Shapiro-Wilk test to confirm that they were not statistically
-different from normal.
+different from normal. A Shapiro-Wilk test utilizes a null hypothesis
+that the data is sampled from a normally distributed population and an
+alternative hypothesis that it is not. A p-value of 0.05 or greater is
+interpreted as a failure to reject the null hypothesis, indicating that
+there is not statistical evidence that the data is not normally
+distributed.
 
-Shapiro-Wilk test on the percentage of poor air quality days:
+#### Shapiro-Wilk test on the percentage of poor air quality days:
 
 ``` r
 shapiro.test(my_data$Percentage.of..poor.air.quality..days)
@@ -145,7 +162,7 @@ shapiro.test(my_data$Percentage.of..poor.air.quality..days)
 Since the p-value of 0.5452 is greater than 0.05, there is insufficient
 evidence to state that the data is not normally distributed.
 
-Shapiro-Wilk test for the percentage of adults with current asthma:
+#### Shapiro-Wilk test for the percentage of adults with current asthma:
 
 ``` r
 shapiro.test(my_data$Percent.Adults.with.Current.Asthma)
@@ -160,11 +177,13 @@ shapiro.test(my_data$Percent.Adults.with.Current.Asthma)
 Since the p-value of 0.4249 is greater than 0.05, there is insufficient
 evidence to state that the data is not normally distributed.
 
-As both variables can be assumed to be normally distributed, we can
-proceed to run additional statistical tests to evaluate the relationship
-between the two variables.
+As tests on both variables have a p-value greater than 0.05, both can be
+assumed to be normally distributed, and therefore we can proceed to run
+additional statistical tests, such as a linear regression model and
+Pearson correlation test to evaluate the relationship between the two
+variables.
 
-## First Analysis- Scatterplot
+#### Scatterplot with Linear Regression
 
 This visualization plots the proportion of days with poor air quality on
 the x-axis, and the percentage of adults with current asthma on the
